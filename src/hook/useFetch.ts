@@ -44,8 +44,12 @@ const useFetch = (url: string) => {
         } else {
           setError('No data found');
         }
-      } catch (e: any) {
-        setError(e.message);
+      } catch (e: unknown) {
+        if (e instanceof Error) {
+          setError(e.message);
+        } else {
+          setError('An unknown error occurred');
+        }
       } finally {
         setLoading(false);
       }
